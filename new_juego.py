@@ -1,5 +1,5 @@
 import pygame 
-from personaje import Personaje
+from person import Personaje
 
 pygame.init() #metodo para inicializar pygame si no pues como monda va a funcionar
 

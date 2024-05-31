@@ -1,6 +1,5 @@
 import pygame 
 from person import Personaje
-
 pygame.init() #metodo para inicializar pygame si no pues como monda va a funcionar
 
 tamaño= (1300,700)

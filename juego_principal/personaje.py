@@ -77,7 +77,7 @@ class Personaje(pg.sprite.Sprite):
             self.image = self.animacion_muerte[5]      
         for enemigo in lista_enemigos:
             if enemigo.rect.colliderect(self.rect):
-                self.vida -= 10           
+                self.vida -= 5           
         
     def control_tecla(self, key):
         if key[pg.K_d]:

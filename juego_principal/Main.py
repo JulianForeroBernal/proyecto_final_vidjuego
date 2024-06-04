@@ -36,6 +36,8 @@ def corazones_jugador():
     for i in range (0,4):
         if jugador.vida >= ((i+1)*25):
             ventana.blit(corazon_lleno,(20+i*50,25))
+        elif jugador.vida % 25 > 0 :
+            ventana.blit(corazon_vacio,(20+i*50,25))
 
 #instansia arma
 imagen_arma = pg.image.load("imagenes/jugador/arma.png")

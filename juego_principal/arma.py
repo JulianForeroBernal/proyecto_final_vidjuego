@@ -18,11 +18,11 @@ class Arma():
         self.forma.y += 15
         if personaje.direccion == "derecha":
             self.forma.x += personaje.shape.width / cons.DISTANCIA_ARMA
-            self.forma.y += 10  
+            self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y     
             self.rotar(False)  
         if personaje.direccion == "izquierda":
             self.forma.x -= personaje.shape.width / cons.DISTANCIA_ARMA
-            self.forma.y += 10
+            self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y
             self.rotar(True)
         if pg.mouse.get_pressed()[0] and self.disparo == False:
             bala = Bala(self.imagen_bala, self.forma.centerx,self  .forma.centery)

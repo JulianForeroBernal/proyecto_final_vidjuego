@@ -4,6 +4,7 @@ from bala import Bala
 
 
 pg.init()
+
 class Arma():
     def __init__(self, image, imagen_bala) :
         self.imagen_bala = imagen_bala
@@ -12,24 +13,35 @@ class Arma():
         self.imagen = pg.transform.rotate(self.imagen_originial, self.angulo)
         self.forma = self.imagen.get_rect()
         self.disparo = False
+        self.ultimo_disparo = pg.time.get_ticks()
     def update(self,personaje):
-        bala = None 
-        self.forma.center = personaje.rect.center        
-        self.forma.y += 15
-        if personaje.direccion == "derecha":
-            self.forma.x += personaje.shape.width / cons.DISTANCIA_ARMA
-            self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y     
-            self.rotar(False)  
-        if personaje.direccion == "izquierda":
-            self.forma.x -= personaje.shape.width / cons.DISTANCIA_ARMA
-            self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y
-            self.rotar(True)
-        if pg.mouse.get_pressed()[0] and self.disparo == False:
-            bala = Bala(self.imagen_bala, self.forma.centerx,self  .forma.centery)
-            self.disparo = True
-        if pg.mouse.get_pressed()[0]== False:
-            self.disparo = False
-        return bala
+        if personaje.vivo == True :
+            bala = None 
+            self.forma.center = personaje.rect.center        
+            self.forma.y += 15
+            if personaje.direccion == "derecha":
+                self.forma.x += personaje.shape.width / cons.DISTANCIA_ARMA
+                self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y     
+                self.rotar(False)  
+            if personaje.direccion == "izquierda":
+                self.forma.x -= personaje.shape.width / cons.DISTANCIA_ARMA
+                self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y
+                self.rotar(True)
+            if personaje.direccion == "arriba":
+                self.forma.x += personaje.shape.width / cons.DISTANCIA_ARMA
+                self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y     
+                self.rotar(False) 
+            if personaje.direccion == "abajo":
+                self.forma.x += personaje.shape.width / cons.DISTANCIA_ARMA
+                self.forma.y += personaje.shape.height /cons.DISTANCIA_ARMA_Y     
+                self.rotar(False) 
+            if pg.mouse.get_pressed()[0] and self.disparo == False and (pg.time.get_ticks() - self.ultimo_disparo >= cons.TIEMPO_DISPARO):
+                bala = Bala(self.imagen_bala, self.forma.centerx,self  .forma.centery)
+                self.disparo = True
+                self.ultimo_disparo = pg.time.get_ticks()
+            if pg.mouse.get_pressed()[0] == False:
+                self.disparo = False
+            return bala
         
         
     def draw(self, interfaz):

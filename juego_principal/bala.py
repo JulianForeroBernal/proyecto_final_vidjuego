@@ -13,14 +13,20 @@ class Bala(pg.sprite.Sprite):
         self.rect.center = (x,y)
         self.delta_x = cons.VELOCIDAD_BALA
         
-    def update(self,lista_enemigos):
+        
+    def update(self,lista_enemigos,jugador):
         daño = 0
         pos_enemigo = None
-        self.rect.x += self.delta_x
-        if self.rect.left > cons.ANCHO:
+        if jugador.direccion == "derecha" or jugador.direccion == "stop_derecha" or jugador.direccion == "arriba" or jugador.direccion == "abajo":
+            self.rect.x += self.delta_x 
+        if jugador.direccion == "izquierda" or jugador.direccion == "stop_izquierda":
+            self.rect.x -= self.delta_x 
+        if self.rect.left > cons.ANCHO :
+            self.kill()
+        if self.rect.left < 0 :
             self.kill()
         for enemigo in lista_enemigos :
-            if enemigo.rect.colliderect(self.rect):
+            if enemigo.rect.colliderect(self.rect) and enemigo.vivo == True:
                 daño = 15 + rn.randint(5,15)
                 enemigo.vida -= daño
                 pos_enemigo = enemigo.rect

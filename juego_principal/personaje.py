@@ -50,6 +50,7 @@ class Personaje(pg.sprite.Sprite):
         self.shape = pg.Rect(0,0,cons.PIXELES_FRAME,cons.PIXELES_FRAME)
         self.vida = 100
         self.vivo = True
+        self.puntuacion = 0
         
     def update(self,lista_enemigos) :    
         if self.index >= 5:
@@ -71,38 +72,40 @@ class Personaje(pg.sprite.Sprite):
             self.image = self.animacion_quieto
         if self.direccion == "stop_izquierda" :
             self.image = pg.transform.flip(self.animacion_quieto,True,False)               
-        if self.vida <= 0 :
+        if self.vida <= 24 :
             self.vida = 0
             self.vivo = False
             self.image = self.animacion_muerte[5]      
-        for enemigo in lista_enemigos:
-            if enemigo.rect.colliderect(self.rect):
-                self.vida -= 5           
+        #for enemigo in lista_enemigos:
+         #   if enemigo.rect.colliderect(self.rect):
+          #      self.vida -= 5
+                           
         
     def control_tecla(self, key):
-        if key[pg.K_d]:
-            self.rect.x += cons.VELOCIDAD
-            self.direccion = "derecha"
-        elif key[pg.K_a]:
-            self.rect.x -= cons.VELOCIDAD
-            self.direccion = "izquierda"
-        elif key[pg.K_w]:
-            self.rect.y -= cons.VELOCIDAD
-            self.direccion = "arriba"
-        elif key[pg.K_s]:
-            self.rect.y += cons.VELOCIDAD
-            self.direccion = "abajo"
-        else:
-            if self.direccion == "derecha":
-                self.direccion = "stop"
-            if self.direccion == "izquierda":
-                self.direccion = "stop_izquierda"
-            if self.direccion == "abajo":
-                self.direccion = "stop"
-            if self.direccion == "arriba":
-                self.direccion = "stop"
-            if self.direccion == "ataque":
-                self.direccion = "stop"
+        if self.vivo == True:
+            if key[pg.K_d]:
+                self.rect.x += cons.VELOCIDAD
+                self.direccion = "derecha"
+            elif key[pg.K_a]:
+                self.rect.x -= cons.VELOCIDAD
+                self.direccion = "izquierda"
+            elif key[pg.K_w]:
+                self.rect.y -= cons.VELOCIDAD
+                self.direccion = "arriba"
+            elif key[pg.K_s]:
+                self.rect.y += cons.VELOCIDAD
+                self.direccion = "abajo"
+            else:
+                if self.direccion == "derecha":
+                    self.direccion = "stop_derecha"
+                if self.direccion == "izquierda":
+                    self.direccion = "stop_izquierda"
+                if self.direccion == "abajo":
+                    self.direccion = "stop_derecha"
+                if self.direccion == "arriba":
+                    self.direccion = "stop_derecha"
+                if self.direccion == "ataque":
+                    self.direccion = "stop"
     
                                  
         

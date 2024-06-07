@@ -1,6 +1,10 @@
 import pygame as pg
 import constantes as cons
 pg.init()
+pg.mixer.init()
+
+sonido_moneda = pg.mixer.Sound("sonidos/coin.wav")
+sonido_pocion = pg.mixer.Sound("sonidos/heal.wav")
 
 class Items(pg.sprite.Sprite):
     def __init__(self,x,y,animacion_item,tipo_de_item):
@@ -32,10 +36,12 @@ class Items(pg.sprite.Sprite):
             self.update_time = 0
         if self.item_type == 1:
             if jugador.rect.colliderect(self.rect):
+                sonido_moneda.play()
                 self.kill()
-                jugador.puntuacion += 10
+                jugador.puntuacion += 25
         if self.item_type == 2 :
             if jugador.rect.colliderect(self.rect):
+                sonido_pocion.play()
                 self.kill()
                 if jugador.vida < 99 :
                     jugador.vida += 25

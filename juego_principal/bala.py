@@ -3,7 +3,7 @@ import constantes as cons
 import random as rn
 
 pg.init()
-
+sonido_daño = pg.mixer.Sound("sonidos/hurt.wav")
 class Bala(pg.sprite.Sprite):
     def __init__ (self, image, x, y):
         pg.sprite.Sprite.__init__(self)
@@ -14,7 +14,7 @@ class Bala(pg.sprite.Sprite):
         self.delta_x = cons.VELOCIDAD_BALA
         
         
-    def update(self,lista_enemigos,jugador):
+    def update(self,lista_enemigos,jugador,lista_obstaculo):
         daño = 0
         pos_enemigo = None
         if jugador.direccion == "derecha" or jugador.direccion == "stop_derecha" or jugador.direccion == "arriba" or jugador.direccion == "abajo":
@@ -27,12 +27,17 @@ class Bala(pg.sprite.Sprite):
             self.kill()
         for enemigo in lista_enemigos :
             if enemigo.rect.colliderect(self.rect) and enemigo.vivo == True:
+                sonido_daño.play()
                 daño = 15 + rn.randint(5,15)
                 enemigo.vida -= daño
                 pos_enemigo = enemigo.rect
                 self.kill()
                 break
-        return daño , pos_enemigo            
+        for obstaculo in lista_obstaculo:
+            if obstaculo[1].colliderect(self.rect):
+                self.kill()
+        return daño , pos_enemigo 
+                  
         
     def draw(self,internfaz):
         internfaz.blit(self.image,self.rect.centerx,self.rect.centery)

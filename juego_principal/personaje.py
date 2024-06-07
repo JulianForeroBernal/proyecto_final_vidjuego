@@ -1,5 +1,6 @@
 import pygame as pg
 import constantes as cons
+
 pg.init()
 
 #AGRGANDO IMAGENES A LAS LISTAS PARA LAS ANIMACIONES DEL PERSONAJE
@@ -52,7 +53,7 @@ class Personaje(pg.sprite.Sprite):
         self.vivo = True
         self.puntuacion = 0
         
-    def update(self,lista_enemigos) :    
+    def update(self,lista_enemigos,lista_obstaculos) :    
         if self.index >= 5:
             self.index = 0
         self.image = self.animacion_quieto        
@@ -79,7 +80,17 @@ class Personaje(pg.sprite.Sprite):
         #for enemigo in lista_enemigos:
          #   if enemigo.rect.colliderect(self.rect):
           #      self.vida -= 5
-                           
+        for obstaculo in lista_obstaculos :
+            if obstaculo[1].colliderect(self.rect):
+                if self.direccion == "derecha":
+                    self.rect.right = obstaculo[1].left
+                if self.direccion == "izquierda":
+                    self.rect.left = obstaculo[1].right
+                if self.direccion == "arriba":
+                    self.rect.top = obstaculo[1].bottom
+                if self.direccion == "abajo":
+                    self.rect.bottom = obstaculo[1].top
+            
         
     def control_tecla(self, key):
         if self.vivo == True:

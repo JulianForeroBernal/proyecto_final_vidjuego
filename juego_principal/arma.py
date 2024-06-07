@@ -5,8 +5,9 @@ from bala import Bala
 
 pg.init()
 
-class Arma():
+class Arma(pg.sprite.Sprite):
     def __init__(self, image, imagen_bala) :
+        pg.sprite.Sprite.__init__(self)
         self.imagen_bala = imagen_bala
         self.imagen_originial = image
         self.angulo = 0

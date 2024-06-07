@@ -14,7 +14,7 @@ pg.mixer.init()
 
 #AJUSTES VENTANA 
 ventana = pg.display.set_mode((cons.ANCHO,cons.ALTO))
-pg.display.set_caption("DOCE PODEROSOS FPS")
+pg.display.set_caption("JUEGO")
 
 #FUNCION PARA DIBUJAR TEXTOS 
 def dibujar_textos(texto,font,color,x,y):
